@@ -31,3 +31,5 @@ app.append(body);
 body.addEventListener("click", increment);
 count_display.style.fontSize = "20px";
 app.append(count_display);
+
+setInterval(increment, 1000);
