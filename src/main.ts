@@ -24,6 +24,22 @@ function increment() {
     '<button name="button">Rats recruited: ' + counter + " 🪖🐀</button>";
 }
 
+// Automatic incrementer
+let startTime = performance.now();
+let endTime;
+let elapsedTime = 0;
+function timedIncrement() {
+  endTime = performance.now()
+  elapsedTime += endTime - startTime;
+  if (elapsedTime >= 1000) {
+    increment();
+    elapsedTime -= 1000;
+  }
+  startTime = endTime;
+  requestAnimationFrame(timedIncrement);
+}
+timedIncrement();
+
 body.innerHTML = button;
 body.style.fontSize = "25px";
 app.append(body);
@@ -31,5 +47,3 @@ app.append(body);
 body.addEventListener("click", increment);
 count_display.style.fontSize = "20px";
 app.append(count_display);
-
-setInterval(increment, 1000);
