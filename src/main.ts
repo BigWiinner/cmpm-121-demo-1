@@ -29,7 +29,7 @@ let startTime = performance.now();
 let endTime;
 let elapsedTime = 0;
 function timedIncrement() {
-  endTime = performance.now()
+  endTime = performance.now();
   elapsedTime += endTime - startTime;
   if (elapsedTime >= 1000) {
     increment();
