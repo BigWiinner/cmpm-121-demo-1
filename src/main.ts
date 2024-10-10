@@ -37,7 +37,7 @@ function timedIncrement() {
   endTime = performance.now();
   elapsedTime += endTime - startTime;
   if (elapsedTime >= 1000) {
-    if(amount){
+    if (amount) {
       increment(true);
     }
     increment(false);
@@ -52,14 +52,14 @@ body.innerHTML = button;
 body.style.fontSize = "25px";
 app.append(body);
 
-body.addEventListener("click", function() {
+body.addEventListener("click", function () {
   increment(false);
 });
 count_display.style.fontSize = "20px";
 app.append(count_display);
 
 const allowUpgrageCheckbox = document.createElement("button");
-allowUpgrageCheckbox.innerHTML = 'Hire recruiter for 10 recruits';
+allowUpgrageCheckbox.innerHTML = "Hire recruiter for 10 recruits";
 
 function update() {
   if (counter >= 10) {
@@ -71,7 +71,7 @@ function update() {
 }
 update();
 
-allowUpgrageCheckbox.addEventListener("click", function() {
+allowUpgrageCheckbox.addEventListener("click", function () {
   if (counter >= 10) {
     counter -= 10;
     //rate++;
