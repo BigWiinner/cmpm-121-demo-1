@@ -2,60 +2,11 @@ import "./style.css";
 
 const app: HTMLDivElement = document.querySelector("#app")!;
 
-const gameName = "<i> Become the Rat King! </i>";
-
-document.title = gameName;
-
 const header = document.createElement("h1");
-header.innerHTML = gameName;
+header.innerHTML = "<i> Become the Rat King! </i>";
 header.style.color = "red";
 
 app.append(header);
-
-let counter: number = 0;
-
-const button = '<button name="button">"Click to recruit me" - 🐀</button>';
-const body = document.createElement("div");
-const count_display = document.createElement("div");
-
-let amount = 0;
-function increment(timed: boolean) {
-  if (timed) {
-    counter += amount;
-  } else {
-    counter++;
-  }
-  count_display.innerHTML = "Rats recruited: " + counter + " 🪖🐀";
-}
-
-// Automatic incrementer
-let startTime = performance.now();
-let endTime;
-let elapsedTime = 0;
-function timedIncrement() {
-  endTime = performance.now();
-  elapsedTime += endTime - startTime;
-  if (elapsedTime >= 1000) {
-    if (amount) {
-      increment(true);
-    }
-    increment(false);
-    elapsedTime -= 1000;
-  }
-  startTime = endTime;
-  requestAnimationFrame(timedIncrement);
-}
-timedIncrement();
-
-body.innerHTML = button;
-body.style.fontSize = "25px";
-app.append(body);
-
-body.addEventListener("click", function () {
-  increment(false);
-});
-count_display.style.fontSize = "20px";
-app.append(count_display);
 
 class Button {
   text: string;
@@ -69,6 +20,7 @@ class Button {
     this.cost = cost;
     this.increase = increase;
     this.button = document.createElement("button");
+    this.handleClick = this.handleClick.bind(this);
     this.create();
     this.update();
   }
@@ -76,15 +28,7 @@ class Button {
   create() {
     this.button.innerHTML = this.text;
     this.button.style.fontSize = this.size;
-    const cost: number = this.cost;
-    const increase: number = this.increase;
-    this.button.addEventListener("click", function () {
-      if (counter >= cost) {
-        counter -= cost;
-        count_display.innerHTML = "Rats recruited: " + counter + " 🪖🐀";
-        amount += increase;
-      }
-    });
+    this.button.addEventListener("click", this.handleClick);
     app.append(this.button);
   }
 
@@ -96,6 +40,50 @@ class Button {
     }
     requestAnimationFrame(this.update.bind(this));
   }
+
+  handleClick() {
+    // This was inspired by a AI Overview suggestion made by Google when I
+    // searched "how to use addeventlistener in a class object"
+    if (this.cost === 0) {
+      counter++;
+      count_display.innerHTML = "Rats recruited: " + counter + " 🪖🐀";
+    } else if (counter >= this.cost) {
+      counter -= this.cost;
+      count_display.innerHTML = "Rats recruited: " + counter + " 🪖🐀";
+      amount += this.increase;
+    }
+  }
 }
 
-new Button("Hire recruiter for 10 recruits", "25", 10, 1);
+let counter: number = 0;
+
+const count_display = document.createElement("div");
+
+let amount = 0;
+
+// Automatic incrementer
+let startTime = performance.now();
+let endTime;
+let elapsedTime = 0;
+function timedIncrement() {
+  endTime = performance.now();
+  elapsedTime += endTime - startTime;
+  if (elapsedTime >= 1000) {
+    if (amount) {
+      counter += amount;
+    }
+    counter++;
+    elapsedTime -= 1000;
+  }
+  startTime = endTime;
+  count_display.innerHTML = "Rats recruited: " + counter + " 🪖🐀";
+  requestAnimationFrame(timedIncrement);
+}
+timedIncrement();
+
+new Button('"Click to recruit me" - 🐀', "25px", 0, 0);
+
+count_display.style.fontSize = "20px";
+app.append(count_display);
+
+new Button("Hire recruiter for 10 recruits", "20px", 10, 1);
