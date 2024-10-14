@@ -25,8 +25,7 @@ function increment(timed: boolean) {
   } else {
     counter++;
   }
-  count_display.innerHTML =
-    '<button name="button">Rats recruited: ' + counter + " 🪖🐀</button>";
+  count_display.innerHTML = "Rats recruited: " + counter + " 🪖🐀";
 }
 
 // Automatic incrementer
@@ -58,25 +57,45 @@ body.addEventListener("click", function () {
 count_display.style.fontSize = "20px";
 app.append(count_display);
 
-const allowUpgrageCheckbox = document.createElement("button");
-allowUpgrageCheckbox.innerHTML = "Hire recruiter for 10 recruits";
-
-function update() {
-  if (counter >= 10) {
-    allowUpgrageCheckbox.disabled = false;
-  } else {
-    allowUpgrageCheckbox.disabled = true;
+class Button {
+  text: string;
+  size: string;
+  cost: number;
+  increase: number;
+  button: HTMLButtonElement;
+  constructor(text: string, size: string, cost: number, increase: number) {
+    this.text = text;
+    this.size = size;
+    this.cost = cost;
+    this.increase = increase;
+    this.button = document.createElement("button");
+    this.create();
+    this.update();
   }
-  requestAnimationFrame(update);
+
+  create() {
+    this.button.innerHTML = this.text;
+    this.button.style.fontSize = this.size;
+    const cost: number = this.cost;
+    const increase: number = this.increase;
+    this.button.addEventListener("click", function () {
+      if (counter >= cost) {
+        counter -= cost;
+        count_display.innerHTML = "Rats recruited: " + counter + " 🪖🐀";
+        amount += increase;
+      }
+    });
+    app.append(this.button);
+  }
+
+  update() {
+    if (counter >= this.cost) {
+      this.button.disabled = false;
+    } else {
+      this.button.disabled = true;
+    }
+    requestAnimationFrame(this.update.bind(this));
+  }
 }
-update();
 
-allowUpgrageCheckbox.addEventListener("click", function () {
-  if (counter >= 10) {
-    counter -= 10;
-    //rate++;
-    amount++;
-  }
-});
-
-app.append(allowUpgrageCheckbox);
+new Button("Hire recruiter for 10 recruits", "25", 10, 1);
