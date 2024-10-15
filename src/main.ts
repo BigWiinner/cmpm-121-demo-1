@@ -14,8 +14,9 @@ class Button {
   cost: number;
   increase: number;
   button: HTMLButtonElement;
-  item_purchased: HTMLSpanElement;
+  item_purchased: HTMLDivElement;
   amount_purchased: number;
+  cost_message: HTMLDivElement;
   constructor(text: string, size: string, cost: number, increase: number) {
     this.text = text;
     this.size = size;
@@ -25,6 +26,7 @@ class Button {
     this.button.setAttribute("style", "border: 3px solid pink;");
     this.item_purchased = document.createElement("div");
     this.amount_purchased = 0;
+    this.cost_message = document.createElement("div");
     this.handleClick = this.handleClick.bind(this);
     this.create();
     this.update();
@@ -36,6 +38,8 @@ class Button {
     this.button.addEventListener("click", this.handleClick);
     app.append(this.button);
     if (this.cost !== 0) {
+      this.cost_message.innerHTML = "Purchase for " + this.cost;
+      app.append(this.cost_message);
       this.item_purchased.innerHTML =
         "Amount Purchased: " + this.amount_purchased;
       app.append(this.item_purchased);
@@ -57,17 +61,17 @@ class Button {
     if (this.cost === 0) {
       counter++;
       count_display.innerHTML =
-        "Rats recruited: " + Math.floor(counter) + " 🪖🐀";
+        "Rats recruited: " + Math.round(counter * 10) / 10 + " 🪖🐀";
     } else if (counter >= this.cost) {
       counter = Math.round((counter - this.cost) * 10) / 10;
       count_display.innerHTML =
-        "Rats recruited: " + Math.floor(counter) + " 🪖🐀";
+        "Rats recruited: " + Math.round(counter * 10) / 10 + " 🪖🐀";
       amount += Math.round(this.increase * 10) / 10;
       this.amount_purchased++;
-      if (this.cost !== 0) {
-        this.item_purchased.innerHTML =
-          "Amount Purchased: " + this.amount_purchased;
-      }
+      this.item_purchased.innerHTML =
+        "Amount Purchased: " + this.amount_purchased;
+      this.cost = Math.round(this.cost * 1.15 * 10) / 10;
+      this.cost_message.innerHTML = "Purchase for " + this.cost;
     }
   }
 }
@@ -94,7 +98,8 @@ function timedIncrement() {
     elapsedTime -= 1000;
   }
   startTime = endTime;
-  count_display.innerHTML = "Rats recruited: " + Math.floor(counter) + " 🪖🐀";
+  count_display.innerHTML =
+    "Rats recruited: " + Math.floor(counter * 10) / 10 + " 🪖🐀";
   current_rate.innerHTML =
     "Current growth rate: " + Math.round(amount * 10) / 10 + "/sec";
   requestAnimationFrame(timedIncrement);
@@ -110,6 +115,6 @@ current_rate.innerHTML =
   "Current growth rate: " + Math.round(amount * 10) / 10 + "/sec";
 app.append(current_rate);
 
-new Button("Hire recruiter for 10 recruits", "20px", 10, 0.1);
-new Button("Pro-rat posters for 100 recruits", "20px", 100, 2);
-new Button("Rat recruitment commercials for 1000 recruits", "20px", 1000, 50);
+new Button("Hire recruiter", "20px", 10, 0.1);
+new Button("Make pro-rat posters", "20px", 100, 2);
+new Button("Make rat recruitment commercials", "20px", 1000, 50);
