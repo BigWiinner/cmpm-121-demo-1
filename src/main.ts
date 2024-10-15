@@ -38,7 +38,7 @@ class Button {
     this.button.addEventListener("click", this.handleClick);
     app.append(this.button);
     if (this.cost !== 0) {
-      this.cost_message.innerHTML = "Purchase for " + this.cost;
+      this.cost_message.innerHTML = "Purchase for " + this.cost + " drafts";
       app.append(this.cost_message);
       this.item_purchased.innerHTML =
         "Amount Purchased: " + this.amount_purchased;
@@ -60,18 +60,19 @@ class Button {
     // searched "how to use addeventlistener in a class object"
     if (this.cost === 0) {
       counter++;
+      this.button.innerHTML = "🐀";
       count_display.innerHTML =
-        "Rats recruited: " + Math.round(counter * 10) / 10 + " 🪖🐀";
+        "Rat drafts: " + Math.round(counter * 10) / 10 + " 🪖🐀";
     } else if (counter >= this.cost) {
       counter = Math.round((counter - this.cost) * 10) / 10;
       count_display.innerHTML =
-        "Rats recruited: " + Math.round(counter * 10) / 10 + " 🪖🐀";
+        "Rat drafts: " + Math.round(counter * 10) / 10 + " 🪖🐀";
       amount += Math.round(this.increase * 10) / 10;
       this.amount_purchased++;
       this.item_purchased.innerHTML =
         "Amount Purchased: " + this.amount_purchased;
       this.cost = Math.round(this.cost * 1.15 * 10) / 10;
-      this.cost_message.innerHTML = "Purchase for " + this.cost;
+      this.cost_message.innerHTML = "Purchase for " + this.cost + " drafts";
     }
   }
 }
@@ -99,22 +100,23 @@ function timedIncrement() {
   }
   startTime = endTime;
   count_display.innerHTML =
-    "Rats recruited: " + Math.floor(counter * 10) / 10 + " 🪖🐀";
+    "Rat drafts: " + Math.floor(counter * 10) / 10 + " 🪖🐀";
   current_rate.innerHTML =
     "Current growth rate: " + Math.round(amount * 10) / 10 + "/sec";
   requestAnimationFrame(timedIncrement);
 }
 timedIncrement();
 
-new Button('"Click to recruit me" - 🐀', "25px", 0, 0);
+new Button('"Click to recruit me" - 🐀', "35px", 0, 0);
 
 count_display.style.fontSize = "20px";
 app.append(count_display);
 
 current_rate.innerHTML =
   "Current growth rate: " + Math.round(amount * 10) / 10 + "/sec";
+current_rate.style.fontSize = "25px";
 app.append(current_rate);
 
-new Button("Hire recruiter", "20px", 10, 0.1);
-new Button("Make pro-rat posters", "20px", 100, 2);
+new Button("Train recruiters", "20px", 10, 0.1);
+new Button("Make pro-rat propaganda", "20px", 100, 2);
 new Button("Make rat recruitment commercials", "20px", 1000, 50);
