@@ -12,12 +12,43 @@ interface Item {
   name: string;
   cost: number;
   rate: number;
+  description: string;
 }
 
 const availableItems: Item[] = [
-  { name: "Train recruiters", cost: 10, rate: 0.1 },
-  { name: "Make pro-rat propaganda", cost: 100, rate: 2 },
-  { name: "Make rat recruitment commercials", cost: 1000, rate: 50 },
+  {
+    name: "Hire recruiters",
+    cost: 10,
+    rate: 0.1,
+    description:
+      "Recruiters call every household, raking in 1 draft every 10 seconds",
+  },
+  {
+    name: "Make pro-rat propaganda",
+    cost: 100,
+    rate: 2,
+    description: "More rats make for fewer problems! 2 drafts per second",
+  },
+  {
+    name: "Make rat recruitment commercials",
+    cost: 1000,
+    rate: 50,
+    description:
+      "Every rat will prosper when you sign up today! 50 drafts per second",
+  },
+  {
+    name: "Make a pro-rat news network",
+    cost: 10000,
+    rate: 2000,
+    description:
+      "Today's topic: how humans are destroying the world, and how rats are the ones to save it. 2000 drafts per second",
+  },
+  {
+    name: "Become the rat president",
+    cost: 1000000,
+    rate: 40000,
+    description: "Why is there no term limit? 40,000 rats per second",
+  },
 ];
 
 class Button {
@@ -25,17 +56,26 @@ class Button {
   size: string;
   cost: number;
   increase: number;
+  description: string;
   button: HTMLButtonElement;
   item_purchased: HTMLDivElement;
   amount_purchased: number;
   cost_message: HTMLDivElement;
-  constructor(text: string, size: string, cost: number, increase: number) {
+  constructor(
+    text: string,
+    size: string,
+    cost: number,
+    increase: number,
+    description: string
+  ) {
     this.text = text;
     this.size = size;
     this.cost = cost;
     this.increase = increase;
+    this.description = description;
     this.button = document.createElement("button");
     this.button.setAttribute("style", "border: 3px solid pink;");
+    this.button.setAttribute("title", this.description);
     this.item_purchased = document.createElement("div");
     this.amount_purchased = 0;
     this.cost_message = document.createElement("div");
@@ -119,7 +159,7 @@ function timedIncrement() {
 }
 timedIncrement();
 
-new Button('"Click to recruit me" - 🐀', "35px", 0, 0);
+new Button('"Click to recruit me" - 🐀', "35px", 0, 0, "");
 
 count_display.style.fontSize = "20px";
 app.append(count_display);
@@ -135,6 +175,7 @@ for (const i in availableItems) {
     availableItems[i].name,
     "20px",
     availableItems[i].cost,
-    availableItems[i].rate
+    availableItems[i].rate,
+    availableItems[i].description
   );
 }
