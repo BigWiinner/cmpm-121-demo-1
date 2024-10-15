@@ -8,6 +8,18 @@ header.style.color = "red";
 
 app.append(header);
 
+interface Item {
+  name: string;
+  cost: number;
+  rate: number;
+}
+
+const availableItems: Item[] = [
+  { name: "Train recruiters", cost: 10, rate: 0.1 },
+  { name: "Make pro-rat propaganda", cost: 100, rate: 2 },
+  { name: "Make rat recruitment commercials", cost: 1000, rate: 50 },
+];
+
 class Button {
   text: string;
   size: string;
@@ -117,6 +129,12 @@ current_rate.innerHTML =
 current_rate.style.fontSize = "25px";
 app.append(current_rate);
 
-new Button("Train recruiters", "20px", 10, 0.1);
-new Button("Make pro-rat propaganda", "20px", 100, 2);
-new Button("Make rat recruitment commercials", "20px", 1000, 50);
+for (const i in availableItems) {
+  console.log(availableItems[i]);
+  new Button(
+    availableItems[i].name,
+    "20px",
+    availableItems[i].cost,
+    availableItems[i].rate
+  );
+}
