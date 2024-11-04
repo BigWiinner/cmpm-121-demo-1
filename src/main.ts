@@ -4,7 +4,9 @@ const app: HTMLDivElement = document.querySelector("#app")!;
 
 const header = document.createElement("h1");
 header.innerHTML = "<i> Become the Rat King! </i>";
-header.style.color = "red";
+header.style.color = "pink";
+
+document.body.style.backgroundColor = "rgb(56, 14, 14)";
 
 app.append(header);
 
@@ -84,6 +86,7 @@ class Button {
     this.description = description;
     this.button = document.createElement("button");
     this.button.setAttribute("style", "border: 3px solid pink;");
+    this.button.style.backgroundColor = "rgb(45, 30, 30)";
     this.button.setAttribute("title", this.description);
     this.itemPurchased = document.createElement("div");
     this.amountPurchased = 0;
